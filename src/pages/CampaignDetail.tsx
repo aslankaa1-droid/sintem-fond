@@ -15,6 +15,7 @@ export const CampaignDetail = () => {
 
   if (!campaign) return <Navigate to="/404" replace />;
 
+  const isDemo = import.meta.env.VITE_DEMO_MODE === 'true';
   const lang = (i18n.language || 'ru').slice(0, 2);
   const locale = lang === 'ru' ? 'ru-RU' : lang === 'fr' ? 'fr-FR' : lang === 'ar' ? 'ar-EG' : 'en-US';
   const pct = percent(campaign.collectedAmount, campaign.targetAmount);
@@ -102,11 +103,23 @@ export const CampaignDetail = () => {
               />
 
               <div className="dw-pay">
-                <button type="button">
+                <button
+                  type="button"
+                  className={isDemo ? 'is-demo' : ''}
+                  aria-disabled={isDemo || undefined}
+                  title={isDemo ? t('campaign.demo_disabled') : undefined}
+                  onClick={isDemo ? (e) => e.preventDefault() : undefined}
+                >
                   <span className="lbl">{t('campaign.sbp')}</span>
                   <span className="sub">{t('campaign.sbp_sub')}</span>
                 </button>
-                <button type="button" className="ghost">
+                <button
+                  type="button"
+                  className={isDemo ? 'ghost is-demo' : 'ghost'}
+                  aria-disabled={isDemo || undefined}
+                  title={isDemo ? t('campaign.demo_disabled') : undefined}
+                  onClick={isDemo ? (e) => e.preventDefault() : undefined}
+                >
                   <span className="lbl">{t('campaign.card')}</span>
                   <span className="sub">{t('campaign.card_sub')}</span>
                 </button>

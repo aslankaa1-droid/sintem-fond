@@ -198,6 +198,7 @@
     "sbp_sub": "No fee",
     "card": "Card · Apple Pay · Google Pay",
     "card_sub": "YooKassa",
+    "demo_disabled": "Demo · donations are not yet being accepted",
     "monthly": "Donate monthly",
     "fine": "By clicking «Donate» you agree to the donation contract and the personal data policy. The receipt arrives by email; the 2-NDFL certificate is available in your account.",
     "verify_fund_l": "Curator fund · verified",

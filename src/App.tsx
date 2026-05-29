@@ -13,37 +13,10 @@ const StubPage = ({ k }: { k: string }) => {
   return <Stub title={t(k)} />;
 };
 
-const DemoBanner = () => {
-  const { t } = useTranslation();
-  if (import.meta.env.VITE_DEMO_MODE !== 'true') return null;
-  return (
-    <div
-      role="note"
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 200,
-        background: '#1A1714',
-        color: '#F5F1E8',
-        padding: '10px 24px',
-        textAlign: 'center',
-        fontFamily: 'JetBrains Mono, monospace',
-        fontSize: 11,
-        letterSpacing: '0.15em',
-        textTransform: 'uppercase',
-        borderBottom: '1px solid #A87D43',
-      }}
-    >
-      {t('demo_banner')}
-    </div>
-  );
-};
-
 const BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 export const App = () => (
   <BrowserRouter basename={BASENAME}>
-    <DemoBanner />
     <Suspense fallback={<div className="stub"><div className="container">…</div></div>}>
       <Routes>
         <Route element={<Layout />}>

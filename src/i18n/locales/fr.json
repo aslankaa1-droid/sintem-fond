@@ -198,6 +198,7 @@
     "sbp_sub": "Sans frais",
     "card": "Carte · Apple Pay · Google Pay",
     "card_sub": "YooKassa",
+    "demo_disabled": "Démo · les dons ne sont pas encore acceptés",
     "monthly": "Donner chaque mois",
     "fine": "En cliquant « Aider », vous acceptez le contrat de don et la politique de données personnelles. Le reçu arrive par e-mail ; le justificatif 2-NDFL est disponible dans votre espace.",
     "verify_fund_l": "Fonds curateur · vérifié",
