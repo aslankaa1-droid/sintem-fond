@@ -434,10 +434,50 @@ aside.sidebar::-webkit-scrollbar-thumb { background: var(--mist-2); }
 @media (max-width: 720px) {
   .container { padding: 0 20px; }
   nav.main { display: none; }
-  .topbar .container { grid-template-columns: auto 1fr; }
+  .topbar .container { grid-template-columns: auto 1fr; gap: 16px; }
+  .actions { gap: 8px; flex-wrap: nowrap; }
+  .actions .btn.compact { padding: 8px 12px; font-size: 11px; gap: 4px; white-space: nowrap; }
+  .actions .lang button { padding: 3px 5px; font-size: 10px; }
   .feat-grid, .how-grid, .manifest .container, .verify-strip .container, .grid, .docs-grid, .amb-grid, .join-grid, footer.site .container { grid-template-columns: 1fr; }
   .hero { padding: 140px 0 80px; }
   .float-donate { bottom: 16px; right: 16px; padding: 12px 18px; font-size: 13px; }
   .foot-bottom { grid-template-columns: 1fr; }
   .foot-bottom > div:last-child { text-align: left; }
 }
+@media (max-width: 480px) {
+  .actions .btn.compact .btn-label { display: none; }
+}
+
+/* === RTL / Arabic typography === */
+html[lang="ar"] {
+  font-family: "Cairo", var(--sans);
+}
+html[lang="ar"] .hero h1,
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+  font-family: "Amiri", var(--serif);
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+html[lang="ar"] .hero h1 em,
+html[lang="ar"] h2 em,
+html[lang="ar"] h3 em,
+html[lang="ar"] .stub h1 em {
+  font-style: normal;
+  font-weight: 700;
+}
+html[lang="ar"] .lede,
+html[lang="ar"] .dek,
+html[lang="ar"] .don-row .who.anon,
+html[lang="ar"] .pullquote,
+html[lang="ar"] .sidecard p {
+  font-style: normal;
+}
+html[lang="ar"] .brand .word em { font-style: normal; }
+html[dir="rtl"] .breadcrumb { direction: rtl; }
+html[dir="rtl"] .feat-card .more .arrow,
+html[dir="rtl"] .btn .arrow,
+html[dir="rtl"] .link .arrow,
+html[dir="rtl"] .more .arrow { transform: scaleX(-1); }
+html[dir="rtl"] .btn:hover .arrow { transform: scaleX(-1) translateX(4px); }

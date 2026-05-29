@@ -34,7 +34,7 @@ export interface Campaign {
   curatorFund?: Partner;
   doctorName?: LocalizedString;
   patientName: string;
-  patientNameLatin?: string;
+  patientNameByLang?: { en?: string; fr?: string; ar?: string };
   patientAge?: number;
   patientRegion: string;
   diagnosis: LocalizedString;

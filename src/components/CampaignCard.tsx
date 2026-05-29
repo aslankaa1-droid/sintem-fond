@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { Campaign } from '@/types';
-import { formatRub, localize, percent } from '@/lib/formatters';
+import { formatRub, localize, patientNameFor, percent } from '@/lib/formatters';
 
 interface PartnerIconProps { type: 'fund' | 'hospital'; }
 
@@ -17,16 +17,11 @@ interface Props {
   variant?: 'grid' | 'lead' | 'compact';
 }
 
-const cardPatientName = (campaign: Campaign, lang: string): string => {
-  if (lang === 'ru' && campaign.patientNameDative) return campaign.patientNameDative;
-  if (lang !== 'ru' && campaign.patientNameLatin) return campaign.patientNameLatin;
-  return campaign.patientName;
-};
+const cardPatientName = (campaign: Campaign, lang: string): string =>
+  patientNameFor(campaign, lang, lang === 'ru' ? 'dat' : 'nom');
 
-const displayPatientName = (campaign: Campaign, lang: string): string => {
-  if (lang !== 'ru' && campaign.patientNameLatin) return campaign.patientNameLatin;
-  return campaign.patientName;
-};
+const displayPatientName = (campaign: Campaign, lang: string): string =>
+  patientNameFor(campaign, lang, 'nom');
 
 export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
   const { t, i18n } = useTranslation();

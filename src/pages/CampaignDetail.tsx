@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { findCampaign } from '@/mock/data';
-import { formatNumber, formatRub, localize, percent, pluralForm } from '@/lib/formatters';
+import { formatNumber, formatRub, localize, patientNameFor, percent, pluralForm } from '@/lib/formatters';
 
 export const CampaignDetail = () => {
   const { slug = '' } = useParams();
@@ -27,10 +27,8 @@ export const CampaignDetail = () => {
   const daysForm = pluralForm(lang, campaign.deadlineDays);
   const daysLabel = `${campaign.deadlineDays} ${t(`common.day_${daysForm}`)}`;
 
-  const displayName = lang !== 'ru' && campaign.patientNameLatin ? campaign.patientNameLatin : campaign.patientName;
-  const storyName = lang === 'ru'
-    ? (campaign.patientNameGenitive || campaign.patientName)
-    : (campaign.patientNameLatin || campaign.patientName);
+  const displayName = patientNameFor(campaign, lang, 'nom');
+  const storyName = patientNameFor(campaign, lang, lang === 'ru' ? 'gen' : 'nom');
 
   const isAydarhan = campaign.id === 'c-aydarhan';
   const h1 = isAydarhan ? (

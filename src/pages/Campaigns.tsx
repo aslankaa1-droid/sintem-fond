@@ -69,7 +69,9 @@ export const Campaigns = () => {
       if (q) {
         const haystack = [
           c.patientName,
-          c.patientNameLatin,
+          c.patientNameByLang?.en,
+          c.patientNameByLang?.fr,
+          c.patientNameByLang?.ar,
           localize(c.diagnosis, lang),
           localize(c.shortTitle, lang),
           c.publisher.name,

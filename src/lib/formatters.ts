@@ -12,6 +12,27 @@ export const localize = (value: LocalizedString | undefined, lang: string): stri
   return value.ru;
 };
 
+export interface NamedPatient {
+  patientName: string;
+  patientNameByLang?: { en?: string; fr?: string; ar?: string };
+  patientNameDative?: string;
+  patientNameGenitive?: string;
+}
+
+export const patientNameFor = (p: NamedPatient, lang: string, form: 'nom' | 'dat' | 'gen' = 'nom'): string => {
+  const k = (lang || 'ru').slice(0, 2);
+  if (k === 'ru') {
+    if (form === 'dat' && p.patientNameDative) return p.patientNameDative;
+    if (form === 'gen' && p.patientNameGenitive) return p.patientNameGenitive;
+    return p.patientName;
+  }
+  const tr = p.patientNameByLang;
+  if (k === 'en' && tr?.en) return tr.en;
+  if (k === 'fr' && tr?.fr) return tr.fr;
+  if (k === 'ar' && tr?.ar) return tr.ar;
+  return p.patientName;
+};
+
 const millionAbbr: Record<string, string> = {
   'ru-RU': 'млн',
   'en-US': 'M',
