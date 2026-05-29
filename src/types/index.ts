@@ -47,6 +47,9 @@ export interface Campaign {
   documents?: Array<{ name: string; size: string; type: 'extract' | 'referral' | 'oms_refusal' | 'bill' }>;
   updates?: Array<{ dateLabel: string; dayLabel: string; title: string; body: string }>;
   donations?: Array<{ name: string; sumLabel: string; anon?: boolean }>;
+  targetClinic?: { name: string; license: string };
+  patientNameDative?: string;
+  patientNameGenitive?: string;
 }
 
 export interface SiteStats {

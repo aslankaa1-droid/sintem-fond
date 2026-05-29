@@ -18,32 +18,36 @@ interface Props {
 }
 
 export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const pct = percent(campaign.collectedAmount, campaign.targetAmount);
   const isFeatured = variant === 'lead' || variant === 'compact';
+  const lang = (i18n.language || 'ru').slice(0, 2);
+  const locale = lang === 'ru' ? 'ru-RU' : lang === 'fr' ? 'fr-FR' : lang === 'ar' ? 'ar-EG' : 'en-US';
+  const region = t(`regions.${campaign.patientRegion}`, { defaultValue: campaign.patientRegion });
+  const helpName = lang === 'ru' && campaign.patientNameDative ? campaign.patientNameDative : campaign.patientName;
 
   if (isFeatured) {
     return (
       <Link className={`feat-card${variant === 'lead' ? ' lead' : ''}`} to={`/campaigns/${campaign.slug}`}>
         <div className={`photo ph-${campaign.photoVariant}`}>
           <div className="badges">
-            {campaign.urgent && <span className="tag crimson">Срочно</span>}
-            {campaign.omsRefusal && <span className="tag brass">ОМС-отказ</span>}
+            {campaign.urgent && <span className="tag crimson">{t('badges.urgent')}</span>}
+            {campaign.omsRefusal && <span className="tag brass">{t('badges.oms_refusal')}</span>}
             {!campaign.urgent && !campaign.omsRefusal && campaign.beneficiary === 'hospital' && (
-              <span className="tag sage">Прямо в клинику</span>
+              <span className="tag sage">{t('badges.direct_to_clinic')}</span>
             )}
           </div>
         </div>
-        <div className="partner">{campaign.publisher.name} · {campaign.publisher.region}</div>
+        <div className="partner">{campaign.publisher.name} · {region}</div>
         <h3 className="title">{campaign.shortTitle}</h3>
         <div className="progress-row">
           <div className="progress"><span style={{ width: `${pct}%` }} /></div>
           <div className="amounts">
-            <div className="col"><span>{t('campaigns.amounts_collected')}</span><span className="v">{formatRub(campaign.collectedAmount)}</span></div>
-            <div className="col right"><span>{t('campaigns.amounts_target')}</span><span className="v">{formatRub(campaign.targetAmount)}</span></div>
+            <div className="col"><span>{t('campaigns.amounts_collected')}</span><span className="v">{formatRub(campaign.collectedAmount, locale)}</span></div>
+            <div className="col right"><span>{t('campaigns.amounts_target')}</span><span className="v">{formatRub(campaign.targetAmount, locale)}</span></div>
           </div>
         </div>
-        <span className="more">{t('cta.help')} {campaign.patientName} <span className="arrow">→</span></span>
+        <span className="more">{t('cta.help_with_name', { name: helpName })} <span className="arrow">→</span></span>
       </Link>
     );
   }
@@ -52,25 +56,25 @@ export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
     <Link className="card" to={`/campaigns/${campaign.slug}`}>
       <div className={`photo ph-${campaign.photoVariant}`}>
         <div className="badges">
-          {campaign.urgent && <span className="tag crimson">Срочно</span>}
-          {campaign.omsRefusal && <span className="tag brass">ОМС-отказ</span>}
+          {campaign.urgent && <span className="tag crimson">{t('badges.urgent')}</span>}
+          {campaign.omsRefusal && <span className="tag brass">{t('badges.oms_refusal')}</span>}
           {!campaign.urgent && !campaign.omsRefusal && campaign.beneficiary === 'hospital' && (
-            <span className="tag sage">Прямо в клинику</span>
+            <span className="tag sage">{t('badges.direct_to_clinic')}</span>
           )}
-          {campaign.helpType === 'medication' && <span className="tag">Лекарства</span>}
-          {campaign.helpType === 'equipment' && <span className="tag">Оборудование</span>}
+          {campaign.helpType === 'medication' && <span className="tag">{t('badges.medication')}</span>}
+          {campaign.helpType === 'equipment' && <span className="tag">{t('badges.equipment')}</span>}
         </div>
       </div>
       <div className="partner">
         <PartnerIcon type={campaign.publisher.type} />
-        {campaign.publisher.name} · {campaign.publisher.region}
+        {campaign.publisher.name} · {region}
       </div>
       <h3>{campaign.shortTitle}</h3>
       <div className="progress-row">
         <div className="progress"><span style={{ width: `${pct}%` }} /></div>
         <div className="amounts">
-          <div className="col"><span>{t('campaigns.amounts_collected')}</span><span className="v">{formatRub(campaign.collectedAmount)}</span></div>
-          <div className="col right"><span>{t('campaigns.amounts_target')}</span><span className="v">{formatRub(campaign.targetAmount)}</span></div>
+          <div className="col"><span>{t('campaigns.amounts_collected')}</span><span className="v">{formatRub(campaign.collectedAmount, locale)}</span></div>
+          <div className="col right"><span>{t('campaigns.amounts_target')}</span><span className="v">{formatRub(campaign.targetAmount, locale)}</span></div>
         </div>
       </div>
     </Link>

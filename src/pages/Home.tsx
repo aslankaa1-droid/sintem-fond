@@ -2,11 +2,22 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CampaignCard } from '@/components/CampaignCard';
 import { campaigns, stats, partners } from '@/mock/data';
+import { pluralForm } from '@/lib/formatters';
 
 export const Home = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'ru').slice(0, 2);
   const featured = campaigns.slice(0, 3);
   const fundLogos = partners.filter((p) => p.type === 'fund').slice(0, 6);
+
+  const fundsN = parseInt(stats.fundsActive, 10) || 0;
+  const hospitalsN = parseInt(stats.hospitalsActive, 10) || 0;
+  const activeN = campaigns.length;
+
+  const fundsPlural = t(`common.fund_${pluralForm(lang, fundsN)}`);
+  const hospitalsPlural = t(`common.hospital_${pluralForm(lang, hospitalsN)}`);
+  const activePlural = t(`common.active_${pluralForm(lang, activeN)}`);
+  const campaignPlural = t(`common.campaign_${pluralForm(lang, activeN)}`);
 
   return (
     <>
@@ -57,7 +68,7 @@ export const Home = () => {
         <div className="container">
           <div className="section-head">
             <h2>{t('home.featured_t')} <em>{t('home.featured_em')}</em></h2>
-            <div className="meta">{campaigns.length} {t('home.featured_meta')}</div>
+            <div className="meta">{activeN} {activePlural.toLowerCase()} {campaignPlural} · {t('home.featured_meta')}</div>
           </div>
           <div className="feat-grid">
             <CampaignCard campaign={featured[0]} variant="lead" />
@@ -97,7 +108,6 @@ export const Home = () => {
               <div className="person">
                 <div className="avatar a1" />
                 <div className="info">
-                  <div className="name">{t('home.amb.n1')}</div>
                   <div className="role">{t('home.amb.r1')}</div>
                 </div>
               </div>
@@ -107,7 +117,6 @@ export const Home = () => {
               <div className="person">
                 <div className="avatar a2" />
                 <div className="info">
-                  <div className="name">{t('home.amb.n2')}</div>
                   <div className="role">{t('home.amb.r2')}</div>
                 </div>
               </div>
@@ -119,7 +128,7 @@ export const Home = () => {
       <section className="partners">
         <div className="container">
           <div>
-            <h3><em>{stats.fundsActive}</em> {t('home.partners_t_a')} <em>{stats.hospitalsActive}</em> {t('home.partners_t_b')}</h3>
+            <h3><em>{stats.fundsActive}</em> {fundsPlural} {t('common.and')} <em>{stats.hospitalsActive}</em> {hospitalsPlural}</h3>
             <p>{t('home.partners_sub')}</p>
           </div>
           <div className="logos">
