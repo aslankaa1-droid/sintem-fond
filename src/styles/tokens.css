@@ -1,0 +1,35 @@
+/* === ДИЗАЙН-ТОКЕНЫ «БУМАГА И ЛАТУНЬ» ===
+   Источник правды — 03_Дизайн/BRANDBOOK.html.
+   Менять только здесь; компоненты ссылаются на var(--*). */
+
+:root {
+  /* Палитра */
+  --paper:        #F5F1E8;
+  --paper-deep:   #EDE6D4;
+  --mist:         #E8E2D3;
+  --mist-2:       #D8D0BC;
+  --ink:          #1A1714;
+  --ink-2:        #3B3530;
+  --ink-3:        #6B6258;
+  --brass:        #A87D43;
+  --brass-deep:   #8A6432;
+  --brass-glow:   #C99457;
+  --sage:         #5B7A6E;
+  --sage-deep:    #3F574E;
+  --crimson:      #9B2C2C;
+
+  /* Шрифты */
+  --serif: 'Fraunces', 'Times New Roman', serif;
+  --sans:  'Manrope', system-ui, -apple-system, sans-serif;
+  --mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Шаг */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 40px;
+  --space-6: 64px;
+  --space-7: 96px;
+  --space-8: 144px;
+}

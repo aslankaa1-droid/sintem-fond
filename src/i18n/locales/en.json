@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "about": "About",
+    "how": "How it works",
+    "campaigns": "Campaigns",
+    "partners": "Funds & hospitals",
+    "reports": "Reports",
+    "partnership": "For partners"
+  },
+  "cta": {
+    "donate_now": "Donate now",
+    "share": "Share",
+    "subscribe_monthly": "Set up monthly giving",
+    "choose_campaign": "Choose a campaign",
+    "help": "Help"
+  },
+  "home": {
+    "eyebrow": "Targeted medical aid · Russia · 2026",
+    "h1_a": "Help",
+    "h1_b": "without",
+    "h1_em": "melodrama",
+    "h1_lift": "Just the fact of need.",
+    "lede": "A platform connecting charity foundations and hospitals to deliver help to specific people quickly and transparently — without manipulation or sentimental adjectives.",
+    "meter_label": "Raised year-to-date",
+    "meter_unit_collected": "million rubles · {{donors}} donors",
+    "meter_funds": "funds",
+    "meter_hospitals": "hospitals",
+    "meter_beneficiaries": "beneficiaries",
+    "meter_reporting": "reporting rate",
+    "featured_t": "Currently raising",
+    "featured_em": "help",
+    "featured_meta": "Active campaigns · Updated today"
+  },
+  "campaigns": {
+    "h1_a": "Currently raising",
+    "em": "help",
+    "h1_b": "for {{count}} people",
+    "found_a": "Found",
+    "found_b": "campaigns",
+    "back": "Back",
+    "next": "Next",
+    "amounts_collected": "Raised",
+    "amounts_target": "Target"
+  },
+  "campaign": {
+    "open": "Open · {{days}} days remaining",
+    "of": "raised of",
+    "sbp": "Donate via SBP",
+    "card": "Card · Apple Pay · Google Pay",
+    "anonymous": "Anonymous"
+  },
+  "footer": {
+    "tagline": "Sintem Foundation — targeted medical aid without melodrama or manipulation"
+  },
+  "stub": {
+    "soon_t_a": "This section is",
+    "soon_em": "in preparation",
+    "soon_b": "We publish materials as they pass legal and editorial review.",
+    "back_home": "Back to home"
+  },
+  "not_found": {
+    "t_a": "404 ·",
+    "em": "Page",
+    "t_b": "not found",
+    "body": "The link may be outdated or the campaign has closed. Try the catalog.",
+    "to_home": "Home",
+    "to_catalog": "Campaigns"
+  }
+}

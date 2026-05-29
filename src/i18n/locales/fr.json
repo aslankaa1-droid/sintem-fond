@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "about": "À propos",
+    "how": "Comment ça marche",
+    "campaigns": "Collectes",
+    "partners": "Fonds et hôpitaux",
+    "reports": "Rapports",
+    "partnership": "Partenaires"
+  },
+  "cta": {
+    "donate_now": "Faire un don",
+    "share": "Partager",
+    "help": "Aider"
+  },
+  "home": {
+    "h1_a": "Aider",
+    "h1_b": "sans",
+    "h1_em": "pathos",
+    "h1_lift": "Juste le fait du besoin."
+  },
+  "campaigns": { "back": "Précédent", "next": "Suivant" },
+  "campaign": { "anonymous": "Anonyme" },
+  "footer": { "tagline": "Fondation Sintem — aide médicale ciblée sans pathos ni manipulation" },
+  "stub": { "soon_em": "en préparation", "back_home": "Retour à l’accueil" },
+  "not_found": { "em": "Page", "t_b": "introuvable", "to_home": "Accueil", "to_catalog": "Collectes" }
+}
