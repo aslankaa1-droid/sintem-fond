@@ -16,8 +16,6 @@ export const Home = () => {
 
   const fundsPlural = t(`common.fund_${pluralForm(lang, fundsN)}`);
   const hospitalsPlural = t(`common.hospital_${pluralForm(lang, hospitalsN)}`);
-  const activePlural = t(`common.active_${pluralForm(lang, activeN)}`);
-  const campaignPlural = t(`common.campaign_${pluralForm(lang, activeN)}`);
 
   return (
     <>
@@ -68,7 +66,7 @@ export const Home = () => {
         <div className="container">
           <div className="section-head">
             <h2>{t('home.featured_t')} <em>{t('home.featured_em')}</em></h2>
-            <div className="meta">{activeN} {activePlural.toLowerCase()} {campaignPlural} · {t('home.featured_meta')}</div>
+            <div className="meta">{t('home.featured_count', { count: activeN })} · {t('home.featured_meta')}</div>
           </div>
           <div className="feat-grid">
             <CampaignCard campaign={featured[0]} variant="lead" />

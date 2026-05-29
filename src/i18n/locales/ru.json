@@ -112,6 +112,7 @@
     },
     "featured_t": "Сейчас собирают",
     "featured_em": "помощь",
+    "featured_count": "{{count}} активных сборов",
     "featured_meta": "Обновлено сегодня",
     "how_t": "Как помощь",
     "how_em": "доходит",

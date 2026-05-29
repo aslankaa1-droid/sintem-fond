@@ -112,6 +112,7 @@
     },
     "featured_t": "تجمع المساعدة",
     "featured_em": "الآن",
+    "featured_count": "{{count}} حملات نشطة",
     "featured_meta": "تم التحديث اليوم",
     "how_t": "كيف تصل",
     "how_em": "المساعدة",

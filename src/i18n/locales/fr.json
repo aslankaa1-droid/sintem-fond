@@ -112,6 +112,7 @@
     },
     "featured_t": "Collectes en cours",
     "featured_em": "d’aide",
+    "featured_count": "{{count}} collectes actives",
     "featured_meta": "Mis à jour aujourd’hui",
     "how_t": "Comment l’aide",
     "how_em": "arrive",

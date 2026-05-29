@@ -112,6 +112,7 @@
     },
     "featured_t": "Currently raising",
     "featured_em": "help",
+    "featured_count": "{{count}} active campaigns",
     "featured_meta": "Updated today",
     "how_t": "How help",
     "how_em": "reaches",
