@@ -1,4 +1,16 @@
-const NBSP = ' ';
+const NBSP = ' ';
+
+export type LocalizedString = string | { ru: string; en?: string; fr?: string; ar?: string };
+
+export const localize = (value: LocalizedString | undefined, lang: string): string => {
+  if (value === undefined || value === null) return '';
+  if (typeof value === 'string') return value;
+  const k = (lang || 'ru').slice(0, 2);
+  if (k === 'en' && value.en) return value.en;
+  if (k === 'fr' && value.fr) return value.fr;
+  if (k === 'ar' && value.ar) return value.ar;
+  return value.ru;
+};
 
 const millionAbbr: Record<string, string> = {
   'ru-RU': 'млн',

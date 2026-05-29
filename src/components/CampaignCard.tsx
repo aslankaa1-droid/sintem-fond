@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { Campaign } from '@/types';
-import { formatRub, percent } from '@/lib/formatters';
+import { formatRub, localize, percent } from '@/lib/formatters';
 
 interface PartnerIconProps { type: 'fund' | 'hospital'; }
 
@@ -17,6 +17,17 @@ interface Props {
   variant?: 'grid' | 'lead' | 'compact';
 }
 
+const cardPatientName = (campaign: Campaign, lang: string): string => {
+  if (lang === 'ru' && campaign.patientNameDative) return campaign.patientNameDative;
+  if (lang !== 'ru' && campaign.patientNameLatin) return campaign.patientNameLatin;
+  return campaign.patientName;
+};
+
+const displayPatientName = (campaign: Campaign, lang: string): string => {
+  if (lang !== 'ru' && campaign.patientNameLatin) return campaign.patientNameLatin;
+  return campaign.patientName;
+};
+
 export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
   const { t, i18n } = useTranslation();
   const pct = percent(campaign.collectedAmount, campaign.targetAmount);
@@ -24,7 +35,9 @@ export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
   const lang = (i18n.language || 'ru').slice(0, 2);
   const locale = lang === 'ru' ? 'ru-RU' : lang === 'fr' ? 'fr-FR' : lang === 'ar' ? 'ar-EG' : 'en-US';
   const region = t(`regions.${campaign.patientRegion}`, { defaultValue: campaign.patientRegion });
-  const helpName = lang === 'ru' && campaign.patientNameDative ? campaign.patientNameDative : campaign.patientName;
+  const helpName = cardPatientName(campaign, lang);
+  const partnerName = lang !== 'ru' ? campaign.publisher.name : campaign.publisher.name;
+  const title = localize(campaign.shortTitle, lang);
 
   if (isFeatured) {
     return (
@@ -38,8 +51,8 @@ export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
             )}
           </div>
         </div>
-        <div className="partner">{campaign.publisher.name} · {region}</div>
-        <h3 className="title">{campaign.shortTitle}</h3>
+        <div className="partner">{partnerName} · {region}</div>
+        <h3 className="title">{title}</h3>
         <div className="progress-row">
           <div className="progress"><span style={{ width: `${pct}%` }} /></div>
           <div className="amounts">
@@ -67,9 +80,9 @@ export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
       </div>
       <div className="partner">
         <PartnerIcon type={campaign.publisher.type} />
-        {campaign.publisher.name} · {region}
+        {partnerName} · {region}
       </div>
-      <h3>{campaign.shortTitle}</h3>
+      <h3>{title}</h3>
       <div className="progress-row">
         <div className="progress"><span style={{ width: `${pct}%` }} /></div>
         <div className="amounts">
@@ -80,3 +93,5 @@ export const CampaignCard = ({ campaign, variant = 'grid' }: Props) => {
     </Link>
   );
 };
+
+export { displayPatientName };

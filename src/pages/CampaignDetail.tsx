@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { findCampaign } from '@/mock/data';
-import { formatNumber, formatRub, percent, pluralForm } from '@/lib/formatters';
+import { formatNumber, formatRub, localize, percent, pluralForm } from '@/lib/formatters';
 
 export const CampaignDetail = () => {
   const { slug = '' } = useParams();
@@ -27,7 +27,10 @@ export const CampaignDetail = () => {
   const daysForm = pluralForm(lang, campaign.deadlineDays);
   const daysLabel = `${campaign.deadlineDays} ${t(`common.day_${daysForm}`)}`;
 
-  const storyName = lang === 'ru' && campaign.patientNameGenitive ? campaign.patientNameGenitive : campaign.patientName;
+  const displayName = lang !== 'ru' && campaign.patientNameLatin ? campaign.patientNameLatin : campaign.patientName;
+  const storyName = lang === 'ru'
+    ? (campaign.patientNameGenitive || campaign.patientName)
+    : (campaign.patientNameLatin || campaign.patientName);
 
   const isAydarhan = campaign.id === 'c-aydarhan';
   const h1 = isAydarhan ? (
@@ -35,12 +38,16 @@ export const CampaignDetail = () => {
       {t('campaign.aydarhan_h1_a')} <em>{t('campaign.aydarhan_h1_em')}</em> {t('campaign.aydarhan_h1_b')}
     </>
   ) : (
-    campaign.shortTitle
+    localize(campaign.shortTitle, lang)
   );
 
   const recipient = campaign.beneficiary === 'hospital'
     ? t('campaign.recipient_clinic')
     : t('campaign.recipient_fund', { name: campaign.publisher.name });
+
+  const diagnosisText = localize(campaign.diagnosis, lang);
+  const storyText = localize(campaign.story, lang);
+  const doctorRaw = localize(campaign.doctorName, lang);
 
   return (
     <>
@@ -49,7 +56,7 @@ export const CampaignDetail = () => {
           <div className="breadcrumb">
             <Link to="/">{t('common.home')}</Link><span className="sep">/</span>
             <Link to="/campaigns">{t('nav.campaigns')}</Link><span className="sep">/</span>
-            <span>{campaign.patientName} · {region}</span>
+            <span>{displayName} · {region}</span>
           </div>
 
           <div className="cd-grid">
@@ -57,10 +64,10 @@ export const CampaignDetail = () => {
               <div className="tags">
                 {campaign.urgent && <span className="tag crimson on-paper">{t('badges.urgent')} · {daysLabel}</span>}
                 {campaign.omsRefusal && <span className="tag brass">{t('badges.oms_refusal')}</span>}
-                {campaign.badges?.map((b) => <span className="tag" key={b}>{b}</span>)}
+                {campaign.badges?.map((b) => <span className="tag" key={b}>{t(`badges.${b}`)}</span>)}
               </div>
               <h1>{h1}</h1>
-              <p className="dek">{campaign.diagnosis}.</p>
+              <p className="dek">{diagnosisText}.</p>
             </div>
 
             <aside className="donate-widget">
@@ -118,7 +125,7 @@ export const CampaignDetail = () => {
 
           <div className={`cd-photo ph-${campaign.photoVariant}`}>
             <div className="caption">
-              <span className="name">{campaign.patientName}{ageLabel ? `, ${ageLabel}` : ''}</span>
+              <span className="name">{displayName}{ageLabel ? `, ${ageLabel}` : ''}</span>
               <span>{t('campaign.photo_caption')}</span>
             </div>
           </div>
@@ -154,12 +161,12 @@ export const CampaignDetail = () => {
               sub={`${t('verify.license')} ${campaign.targetClinic.license} · ${t('verify.roszdrav')}`}
             />
           )}
-          {campaign.doctorName && (
+          {doctorRaw && (
             <VerifyItem
               type="doctor"
               label={t('campaign.verify_doctor_l')}
-              name={campaign.doctorName.split(',')[0]}
-              sub={campaign.doctorName.split(',').slice(1).join(',').trim()}
+              name={doctorRaw.split(',')[0]}
+              sub={doctorRaw.split(',').slice(1).join(',').trim()}
             />
           )}
         </div>
@@ -170,8 +177,8 @@ export const CampaignDetail = () => {
           <div className="story-grid">
             <article className="story">
               <h2>{t('campaign.story_t')} {storyName}</h2>
-              {campaign.story.split('\n\n').map((p, i) =>
-                p.startsWith('«')
+              {storyText.split('\n\n').map((p, i) =>
+                p.startsWith('«') || p.startsWith('“') || p.startsWith('«')
                   ? <p key={i} className="pullquote">{p}</p>
                   : <p key={i}>{p}</p>,
               )}
@@ -181,9 +188,9 @@ export const CampaignDetail = () => {
               <div className="sidecard">
                 <h4>{t('campaign.diag_label')}</h4>
                 <dl>
-                  <dt>{t('campaign.diag_patient')}</dt><dd>{campaign.patientName}{ageLabel ? `, ${ageLabel}` : ''}</dd>
+                  <dt>{t('campaign.diag_patient')}</dt><dd>{displayName}{ageLabel ? `, ${ageLabel}` : ''}</dd>
                   <dt>{t('campaign.diag_region')}</dt><dd>{region}</dd>
-                  <dt>{t('campaign.diag_text')}</dt><dd>{campaign.diagnosis}</dd>
+                  <dt>{t('campaign.diag_text')}</dt><dd>{diagnosisText}</dd>
                 </dl>
                 {campaign.icd10 && (
                   <div className="icd">{t('campaign.icd10')} · <span className="code">{campaign.icd10}</span></div>
@@ -218,7 +225,7 @@ export const CampaignDetail = () => {
               {campaign.documents.map((d, i) => (
                 <div key={i} className={`doc${d.type === 'oms_refusal' ? ' accent' : ''}`}>
                   <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" /><path d="M4 9h16M9 4v5M15 4v5" /></svg>
-                  <div className="nm">{d.name}</div>
+                  <div className="nm">{localize(d.name, lang)}</div>
                   <div className="meta">PDF · {d.size} · {t(`doc_types.${d.type}`)}</div>
                 </div>
               ))}
@@ -233,8 +240,8 @@ export const CampaignDetail = () => {
             <h3>{t('campaign.updates_t')} <em>{t('campaign.updates_em')}</em></h3>
             {campaign.updates.map((u, i) => (
               <div className="upd" key={i}>
-                <div className="date">{u.dateLabel}<span className="d">{u.dayLabel}</span></div>
-                <div className="content"><h4>{u.title}</h4><p>{u.body}</p></div>
+                <div className="date">{localize(u.dateLabel, lang)}<span className="d">{u.dayLabel}</span></div>
+                <div className="content"><h4>{localize(u.title, lang)}</h4><p>{localize(u.body, lang)}</p></div>
               </div>
             ))}
           </div>

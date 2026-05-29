@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CampaignCard } from '@/components/CampaignCard';
 import { campaigns } from '@/mock/data';
-import { formatRub, pluralForm } from '@/lib/formatters';
+import { formatRub, localize, pluralForm } from '@/lib/formatters';
 import type { Campaign, HelpType, PublisherType } from '@/types';
 
 type Status = 'all' | 'active' | 'urgent' | 'closing';
@@ -66,11 +66,21 @@ export const Campaigns = () => {
       if (regionFilter.size && !regionFilter.has(c.patientRegion)) return false;
       if (helpTypeFilter.size && !helpTypeFilter.has(c.helpType)) return false;
       if (partnerTypeFilter.size && !partnerTypeFilter.has(c.publisher.type)) return false;
-      if (q && !`${c.patientName} ${c.diagnosis} ${c.publisher.name} ${c.patientRegion}`.toLowerCase().includes(q)) return false;
+      if (q) {
+        const haystack = [
+          c.patientName,
+          c.patientNameLatin,
+          localize(c.diagnosis, lang),
+          localize(c.shortTitle, lang),
+          c.publisher.name,
+          c.patientRegion,
+        ].filter(Boolean).join(' ').toLowerCase();
+        if (!haystack.includes(q)) return false;
+      }
       return true;
     });
     return sortCampaigns(base, sort);
-  }, [status, query, omsOnly, regionFilter, helpTypeFilter, partnerTypeFilter, sort]);
+  }, [status, query, omsOnly, regionFilter, helpTypeFilter, partnerTypeFilter, sort, lang]);
 
   const totalTarget = filtered.reduce((s, c) => s + c.targetAmount, 0);
   const totalCollected = filtered.reduce((s, c) => s + c.collectedAmount, 0);

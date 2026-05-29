@@ -14,6 +14,7 @@ const StubPage = ({ k }: { k: string }) => {
 };
 
 const DemoBanner = () => {
+  const { t } = useTranslation();
   if (import.meta.env.VITE_DEMO_MODE !== 'true') return null;
   return (
     <div
@@ -33,7 +34,7 @@ const DemoBanner = () => {
         borderBottom: '1px solid #A87D43',
       }}
     >
-      Демонстрация платформы · АНО «Фонд Синтем» в стадии регистрации · истории сборов иллюстративные · приём пожертвований не запущен
+      {t('demo_banner')}
     </div>
   );
 };

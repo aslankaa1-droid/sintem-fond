@@ -1,3 +1,5 @@
+import type { LocalizedString } from '@/lib/formatters';
+
 export type HelpType =
   | 'treatment' | 'rehab' | 'medication' | 'equipment'
   | 'surgery' | 'abroad' | 'other';
@@ -8,6 +10,12 @@ export type CampaignStatus =
   | 'active' | 'urgent' | 'closing' | 'on_report' | 'completed';
 
 export type PublisherType = 'fund' | 'hospital';
+
+export type BadgeKey =
+  | 'surgery' | 'medication' | 'equipment' | 'rehab' | 'treatment'
+  | 'abroad' | 'other' | 'direct_to_clinic' | 'oms_refusal' | 'urgent';
+
+export type DocType = 'extract' | 'referral' | 'oms_refusal' | 'bill';
 
 export interface Partner {
   id: string;
@@ -24,16 +32,17 @@ export interface Campaign {
   slug: string;
   publisher: Partner;
   curatorFund?: Partner;
-  doctorName?: string;
+  doctorName?: LocalizedString;
   patientName: string;
+  patientNameLatin?: string;
   patientAge?: number;
   patientRegion: string;
-  diagnosis: string;
+  diagnosis: LocalizedString;
   icd10?: string;
   helpType: HelpType;
   category: Category;
-  story: string;
-  shortTitle: string;
+  story: LocalizedString;
+  shortTitle: LocalizedString;
   targetAmount: number;
   collectedAmount: number;
   donorsCount: number;
@@ -42,10 +51,10 @@ export interface Campaign {
   urgent: boolean;
   beneficiary: 'fund' | 'hospital';
   status: CampaignStatus;
-  badges?: string[];
+  badges?: BadgeKey[];
   photoVariant: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
-  documents?: Array<{ name: string; size: string; type: 'extract' | 'referral' | 'oms_refusal' | 'bill' }>;
-  updates?: Array<{ dateLabel: string; dayLabel: string; title: string; body: string }>;
+  documents?: Array<{ name: LocalizedString; size: string; type: DocType }>;
+  updates?: Array<{ dateLabel: LocalizedString; dayLabel: string; title: LocalizedString; body: LocalizedString }>;
   donations?: Array<{ name: string; sumLabel: string; anon?: boolean }>;
   targetClinic?: { name: string; license: string };
   patientNameDative?: string;
